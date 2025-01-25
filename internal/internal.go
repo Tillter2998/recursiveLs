@@ -16,7 +16,8 @@ func (n *FileNode) AddChild(child *FileNode) {
 	n.children = append(n.children, child)
 }
 
-func (n *FileNode) PrintTree(spacer string, level int, isLast bool) {
+// TODO: Fix this logic. needs to be more dynamic. Current logic only works in very specific file structure
+func (n *FileNode) PrintTree(spacer string, level int, isLast bool, parentIsLast bool) {
 	prefix := ""
 	suffix := ""
 
@@ -31,7 +32,11 @@ func (n *FileNode) PrintTree(spacer string, level int, isLast bool) {
 	default:
 		spacer = "│  "
 		for i := 0; i < level-2; i++ {
-			spacer += "   "
+			if !parentIsLast {
+				spacer += "│  "
+			} else {
+				spacer += "   "
+			}
 		}
 		if isLast {
 			prefix = "└─ "
@@ -47,7 +52,7 @@ func (n *FileNode) PrintTree(spacer string, level int, isLast bool) {
 	fmt.Printf("%s%s%s%s\n", spacer, prefix, n.name, suffix)
 
 	for i, child := range n.children {
-		child.PrintTree(spacer, level+1, i == len(n.children)-1)
+		child.PrintTree(spacer, level+1, i == len(n.children)-1, isLast)
 	}
 }
 

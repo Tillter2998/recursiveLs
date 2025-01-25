@@ -15,5 +15,5 @@ func main() {
 	tree, err := fileTree.BuildFileTree(workingDir)
 
 	// tree.PrintTree("", true, true)
-	tree.PrintTree("", 0, false)
+	tree.PrintTree("", 0, false, false)
 }
